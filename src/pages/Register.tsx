@@ -1,7 +1,13 @@
+import RegisterForm from "../components/RegisterForm"
 
 const Register = () => {
+    
+
   return (
-    <div>Register</div>
+    <>
+        <h1 className="text-4xl font-bold mb-5">Registracija</h1>
+        <RegisterForm />
+    </>
   )
 }
 

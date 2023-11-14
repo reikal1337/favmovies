@@ -10,7 +10,10 @@ function App() {
       <>
         <BackgroundImg />
         <NavBar />
-        <Outlet />
+        <main
+          className='w-screen h-screen flex flex-col text-white justify-center items-center'>
+          <Outlet />
+        </main>
 
       </>
     )
