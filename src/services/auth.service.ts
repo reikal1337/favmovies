@@ -10,3 +10,14 @@ export const register = async (formToSend: AuthUser ) => {
     })
     return await res.json()
 }
+
+export const login = async (formToSend: AuthUser ) => {
+    const res = await fetch(BASE_URL + "auth/prisijungimas",{
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formToSend)
+    })
+    return await res.json()
+}

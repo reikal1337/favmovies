@@ -4,12 +4,14 @@ const PageNotFound = () => {
     const error = useRouteError()
 
   return (
-    <>
-        <h1>Ups!</h1>
-        <p>{"Tokio puslapio nera :("}</p>
+    <main
+    className='w-screen bg-main h-screen flex flex-col text-white justify-center items-center'>
+  
+        <h1 className="font-extrabold text-4xl mb-5">Ups!</h1>
+        <p className="text-xl">{"Tokio puslapio nera :("}</p>
         <p>{(error as Error)?.message ||
          (error as { statusText?: string })?.statusText}</p>
-    </>
+    </main>
 
   )
 }
