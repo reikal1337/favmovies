@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 
+@layer utilities{
+  .text-shadow{
+      text-shadow: 5px 5px 10px rgba(0,0,0,0.57);
+  }
+  
+}
+
+
 @keyframes notificationAnim {
     0%{
         opacity: 0;
@@ -19,6 +27,25 @@
         opacity: 0;
     }
   }
+
+  ::-webkit-scrollbar{
+    width: 10px;
+
+}
+::-webkit-scrollbar-track{
+    background: rgb(50,50,50);
+    
+
+}
+::-webkit-scrollbar-thumb{
+    background: rgb(100,100,100);
+    border-radius: 10px;
+
+}
+::-webkit-scrollbar-thumb:hover{
+    background: rgb(160,160,160);
+
+}
 
 
 html, body {

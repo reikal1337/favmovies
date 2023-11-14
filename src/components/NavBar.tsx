@@ -3,10 +3,10 @@ import { NavLink } from "react-router-dom"
 import Cookies from "js-cookie"
 import { useState, useContext } from "react"
 import { UserContext } from "../contexts/UserContext"
+import { IoIosHome } from "react-icons/io";
 
 const NavBar = () => {
-
-  const [loggedIn, setLoggedIn] = useState(Cookies.get("favMovie_token") != undefined)
+  const [loggedIn] = useState(Cookies.get("favMovie_token") != undefined)
   //@ts-ignore
   const { userState } = useContext(UserContext);
   console.log()
@@ -19,6 +19,8 @@ const NavBar = () => {
   return (
     <div className="w-full h-[120px}] z-50 fixed text-white text-xl flex justify-end">
         <div className="bg-main p-5 flex justify-center items-center rounded-bl-3xl">
+          <NavLink to="/" aria-label="Prisijungti"
+              className="mx-5 font-semibold hover:text-gray-400 duration-300"><IoIosHome size={60} /></NavLink>
           {!loggedIn ?
           <>
             <NavLink to="/prisijungimas" aria-label="Prisijungti"
@@ -31,7 +33,7 @@ const NavBar = () => {
           :
           <>
             <button onClick={handleLogOut} aria-label="Atsijungti"><AiOutlineLogin className="btnClose mr-10" size={60} /></button>
-            <NavLink to="/profilis" aria-label="Profilis"><img className="rounded-full"
+            <NavLink to="/profilis" aria-label="Profilis"><img className="rounded-full border-stone-600 border-2"
             srcSet={`https://robohash.org/${userState ? userState : "placeholder"}.jpg?size=80x80`} /></NavLink>
           </>
           }

@@ -1,4 +1,4 @@
-type ContextState = {
-    state: string,
-    setState: (newState: string) => void
-} | {}
+type AllUsers = {
+    _id: string,
+    username: string,
+}

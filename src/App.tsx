@@ -1,7 +1,7 @@
 import { Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom"
 import BackgroundImg from "./components/BackgroundImg"
 import NavBar from "./components/NavBar"
-import { Home, Login, PageNotFound, Profile, Register } from "./pages"
+import { Home, Login, PageNotFound, Profile, Register, Vartotojas } from "./pages"
 import { useState } from "react"
 import Cookies from "js-cookie"
 import { UserContext } from "./contexts/UserContext"
@@ -30,6 +30,9 @@ function App() {
     createRoutesFromElements(
       <Route errorElement={<PageNotFound />} element={<RouterLayout />} >
         <Route path="/" index element={<Home />} />
+        <Route path="/vartotojas/:id" index element={<Vartotojas />} />
+
+        
         {!loggedIn ?
           <>
             <Route path="/prisijungimas" element={<Login />} />
