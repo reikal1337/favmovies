@@ -1,9 +1,15 @@
 import { Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom"
 import BackgroundImg from "./components/BackgroundImg"
 import NavBar from "./components/NavBar"
-import { Home, Login, PageNotFound, Register } from "./pages"
+import { Home, Login, PageNotFound, Profile, Register } from "./pages"
+import { useState } from "react"
+import Cookies from "js-cookie"
+import { UserContext } from "./contexts/UserContext"
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(Cookies.get("favMovie_token") != undefined)
+
+  const [ userState, setUserState] = useState<string>("")
 
   const RouterLayout = () => {
     return (
@@ -24,8 +30,18 @@ function App() {
     createRoutesFromElements(
       <Route errorElement={<PageNotFound />} element={<RouterLayout />} >
         <Route path="/" index element={<Home />} />
-        <Route path="/prisijungimas" element={<Login />} />
-        <Route path="/registracija" element={<Register />} />
+        {!loggedIn ?
+          <>
+            <Route path="/prisijungimas" element={<Login />} />
+            <Route path="/registracija" element={<Register />} />
+          </>
+          :
+          <>
+            <Route path="/profilis" element={<Profile />} />
+          </>
+        }
+
+        
       </Route>
     )
   )
@@ -33,7 +49,9 @@ function App() {
 
   return (
     <>
-      <RouterProvider router={router} />
+      <UserContext.Provider value={{ userState, setUserState }} >
+        <RouterProvider router={router} />
+      </UserContext.Provider>
     </>
   )
 }

@@ -1,9 +1,10 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { onlyLettersAndNumbers, partialPasswordCheck } from "../helpers/validation"
 import { login } from "../services/auth.service"
 import Notifications from "./Notifications"
 import { useNavigate } from "react-router-dom"
 import Cookie from "js-cookie"
+import { ContextUser, UserContext } from "../contexts/UserContext"
 
 const LoginForm = () => {
     const [username, setUsername] = useState("")
@@ -12,6 +13,10 @@ const LoginForm = () => {
     const [notifications, setNotfications] = useState([])
     const [loading, setLoading] = useState(false)
     const [error,setError] = useState("")
+
+    // @ts-ignore
+    const { setUserState } = useContext(UserContext);
+
 
     const navigate = useNavigate()
 
@@ -37,6 +42,7 @@ const LoginForm = () => {
                     expires: 20 / 60,
                     secure: true,
                 })
+                setUserState(res.username)
                 navigate("/")
             }
         }else{
