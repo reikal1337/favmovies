@@ -1,21 +1,36 @@
+import { Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom"
 import BackgroundImg from "./components/BackgroundImg"
-import MainContainer from "./components/MainContainer"
 import NavBar from "./components/NavBar"
+import { Home, Login, PageNotFound, Register } from "./pages"
 
 function App() {
 
+  const RouterLayout = () => {
+    return (
+      <>
+        <BackgroundImg />
+        <NavBar />
+        <Outlet />
+
+      </>
+    )
+
+  }
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route errorElement={<PageNotFound />} element={<RouterLayout />} >
+        <Route path="/" index element={<Home />} />
+        <Route path="/prisijungimas" element={<Login />} />
+        <Route path="/registracija" element={<Register />} />
+      </Route>
+    )
+  )
+
+
   return (
     <>
-    <BackgroundImg />
-    <NavBar />
-
-    <main
-      className='w-screen h-screen flex flex-col justify-center items-center'>
-      
-
-      <MainContainer />
-
-    </main>
+      <RouterProvider router={router} />
     </>
   )
 }
