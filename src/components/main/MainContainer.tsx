@@ -38,8 +38,6 @@ const MainContainer = () => {
         {loggedIn && 
         <>
           <MainNav />
-          
-
         </>
         
         }

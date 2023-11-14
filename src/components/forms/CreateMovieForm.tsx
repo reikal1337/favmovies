@@ -7,8 +7,12 @@ import Cookie from "js-cookie"
 import { UserContext } from "../../contexts/UserContext"
 
 const CreateMovieForm = () => {
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
+    const [formData, setFormData] = useState({
+        title: "",
+        imageURL: "",
+        imdbURL: "",
+        description: "",
+    })
 
     const [notifications, setNotfications] = useState([])
     const [loading, setLoading] = useState(false)
@@ -22,43 +26,12 @@ const CreateMovieForm = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const passCheck = partialPasswordCheck(password, username)
-        if(passCheck === ""){
-            const formToSend = {
-                username: username,
-                password: password,
-            }
-            setLoading(true)
-            setNotfications([])
-            const res = await login(formToSend)
-
-            if(res.message){
-                setNotfications(res.message)
-                setLoading(false)
-            }
-            if(res.access_token){
-                setLoading(false)
-                Cookie.set("favMovie_token", res.access_token,{
-                    expires: 20 / 60,
-                    secure: true,
-                })
-                setUserState(res.username)
-                navigate("/")
-            }
-        }else{
-            setError(passCheck)
-        }
+        console.log(formData)
 
        
     }
-    const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if(onlyLettersAndNumbers(e.target.value)){
-            setUsername(() => e.target.value)
-        }
-    }
-
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(() => e.target.value)
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        
     }
 
   return (
@@ -69,34 +42,66 @@ const CreateMovieForm = () => {
     <form 
         className="flex flex-col justify-center text-black items-center bg-main p-5 px-7 rounded-xl"
         onSubmit={handleSubmit}>
-                <label htmlFor="username" className="text-white font-medium mt-5 mb-1" >Vartotojo vardas:
-                </label>
-                <input 
+                    <label htmlFor="title" className="text-white font-medium mt-5 mb-1" >
+                        *Filmo avadinimas:
+                    </label>
+                    <input 
                         className="rounded-md px-2 bg-gray-200 "
                         type="text"
-                        id="username"
-                        name="username"
-                        value={username}
-                        onChange={handleUsernameChange}
+                        id="title"
+                        name="title"
+                        value={formData.title}
+                        onChange={handleChange}
                         placeholder="Iveskite vartotojo var.."
-                        maxLength={25}
-                        minLength={4}
+                        maxLength={100}
+                        minLength={1}
                         required
                         /> 
 
-                <label htmlFor="password" className="text-white font-medium mt-5 mb-">Slpatazodis:
+                <label htmlFor="imageURL" className="text-white font-medium mt-5 mb-">
+                    *Posterio url:
                 </label>
                 <input 
                     className="rounded-md px-2 bg-gray-200 mb-5"
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={password}
-                    onChange={handlePasswordChange} 
+                    type="text"
+                    id="imageURL"
+                    name="imageURL"
+                    value={formData.imageURL}
+                    onChange={handleChange} 
                     placeholder="Iveskite slaptazodi..."
-                    maxLength={100}
-                    minLength={6} 
+                    maxLength={200}
+                    minLength={5} 
                     required
+                    />
+
+                <label htmlFor="imdbURL" className="text-white font-medium mt-5 mb-">
+                    Imdb url:
+                </label>
+                <input 
+                    className="rounded-md px-2 bg-gray-200 mb-5"
+                    type="imdbURL"
+                    id="imdbURL"
+                    name="imdbURL"
+                    value={formData.imdbURL}
+                    onChange={handleChange} 
+                    placeholder="Iveskite slaptazodi..."
+                    maxLength={200}
+                    minLength={5} 
+                    />
+
+                <label htmlFor="description" className="text-white font-medium mt-5 mb-">
+                    Aprasymas:
+                </label>
+                <input 
+                    className="rounded-md px-2 bg-gray-200 mb-5"
+                    type="description"
+                    id="description"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange} 
+                    placeholder="Iveskite slaptazodi..."
+                    maxLength={1}
+                    minLength={250} 
                     />
                 
                 <p className="text-red-600 text-sm text-center">{error}</p>
