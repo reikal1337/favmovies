@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { onlyLettersAndNumbers, passwordCheck } from "../helpers/validation"
 import { register } from "../services/auth.service"
+import Notifications from "./Notifications"
 
 const RegisterForm = () => {
     const [username, setUsername] = useState("")
@@ -9,7 +10,7 @@ const RegisterForm = () => {
         repPassword: "",
     })
 
-    
+    const [notifications, setNotfications] = useState([])
     const [loading, setLoading] = useState(false)
     const [error,setError] = useState("")
 
@@ -21,9 +22,12 @@ const RegisterForm = () => {
                 username: username,
                 password: passwords.password,
             }
+            setLoading(true)
             const res = await register(formToSend)
 
-            console.log("Fomr:", res)
+            if(res.message){
+                setNotfications(res.message)
+            }
         }else{
             setError(passCheck)
         }
@@ -45,6 +49,10 @@ const RegisterForm = () => {
     }
 
   return (
+    <>
+    {notifications.length > 0 &&
+        <Notifications messages={notifications}/>
+    }
     <form 
         className="flex flex-col justify-center text-black items-center bg-main p-5 px-7 rounded-xl"
         onSubmit={handleSubmit}>
@@ -103,6 +111,7 @@ const RegisterForm = () => {
                 > 
                 Registruoti</button>
             </form>
+            </>
   )
 }
 

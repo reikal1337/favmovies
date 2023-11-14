@@ -1,29 +1,24 @@
-import { NotificationBlue, NotificationRed } from './styles/Notification.styles'
-import {AiFillCloseCircle, AiFillCheckCircle} from "react-icons/ai"
 import ReactDom from "react-dom"
 
 type Props = {
     messages: string[]
 }
 
-function Notification({messages}: Props) {
+function Notifications({messages}: Props) {
 
   
-return(
-        <>
+return (
+        <div className="fixed top-0 left-0">
         {messages.map( (msg,i) => {
             return <div 
                     key={msg+i} 
-                    className='bg-main '
+                    className={`bg-main notification p-3 ${i == messages.length - 1 ? "rounded-br-3xl" : ""}`}
                     >{msg}</div>
         })
 
         }
-        
-        </>
+        </div>
     )
-  )
-  
 }
 
-export default Notification
+export default Notifications

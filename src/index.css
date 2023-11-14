@@ -2,7 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-html,body{
+
+@keyframes notificationAnim {
+    0%{
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    10%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+    90%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+  }
+
+
+html, body {
     margin: 0px;
     padding: 0px;
     font-family: 'Roboto', sans-serif;
@@ -20,13 +39,17 @@ html,body{
 
   }
 
-  .btnClose{
+  .btnClose {
     color: red;
     transition: color 0.3s ease-in-out;
     
   }
 
-  .btnClose:hover{
+  .btnClose:hover {
     color: rgb(102, 6, 6);
+  }
+
+  .notification {
+    animation: notificationAnim 7s forwards;
   }
   
