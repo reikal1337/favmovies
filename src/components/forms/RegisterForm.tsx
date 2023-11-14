@@ -1,49 +1,41 @@
-import { useContext, useState } from "react"
-import { onlyLettersAndNumbers, partialPasswordCheck } from "../helpers/validation"
-import { login } from "../services/auth.service"
-import Notifications from "./Notifications"
+import { useState } from "react"
+import { onlyLettersAndNumbers, passwordCheck } from "../../helpers/validation"
+import { register } from "../../services/auth.service"
+import Notifications from "../Notifications"
 import { useNavigate } from "react-router-dom"
-import Cookie from "js-cookie"
-import { ContextUser, UserContext } from "../contexts/UserContext"
 
-const LoginForm = () => {
+const RegisterForm = () => {
     const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
+    const [passwords, setPasswords] = useState({
+        password: "",
+        repPassword: "",
+    })
 
     const [notifications, setNotfications] = useState([])
     const [loading, setLoading] = useState(false)
     const [error,setError] = useState("")
 
-    // @ts-ignore
-    const { setUserState } = useContext(UserContext);
-
-
     const navigate = useNavigate()
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const passCheck = partialPasswordCheck(password, username)
+        const passCheck = passwordCheck(passwords.password, passwords.repPassword, username)
         if(passCheck === ""){
             const formToSend = {
                 username: username,
-                password: password,
+                password: passwords.password,
             }
             setLoading(true)
             setNotfications([])
-            const res = await login(formToSend)
-
+            const res = await register(formToSend)
             if(res.message){
                 setNotfications(res.message)
                 setLoading(false)
             }
-            if(res.access_token){
+            if(res.username){
                 setLoading(false)
-                Cookie.set("favMovie_token", res.access_token,{
-                    expires: 20 / 60,
-                    secure: true,
-                })
-                setUserState(res.username)
-                navigate("/")
+
+                navigate("/prisijungimas")
             }
         }else{
             setError(passCheck)
@@ -57,8 +49,11 @@ const LoginForm = () => {
         }
     }
 
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(() => e.target.value)
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPasswords(prevState => ({
+            ...prevState,
+             [e.target.name]: e.target.value
+            }))
     }
 
   return (
@@ -87,17 +82,33 @@ const LoginForm = () => {
                 <label htmlFor="password" className="text-white font-medium mt-5 mb-">Slpatazodis:
                 </label>
                 <input 
-                    className="rounded-md px-2 bg-gray-200 mb-5"
+                    className="rounded-md px-2 bg-gray-200"
                     type="password"
                     id="password"
                     name="password"
-                    value={password}
-                    onChange={handlePasswordChange} 
+                    value={passwords.password}
+                    onChange={handleChange} 
                     placeholder="Iveskite slaptazodi..."
                     maxLength={100}
                     minLength={6} 
                     required
                     />
+
+                <label htmlFor="repPassword" className="text-white font-medium mt-5 mb-1">Pakartokite slaptazodi:
+                </label>
+                <input
+                    className="rounded-md px-2 bg-gray-200 mb-5"
+                    type="password"
+                    id="repPassword"
+                    name="repPassword"
+                    value={passwords.repPassword}
+                    onChange={handleChange} 
+                    placeholder="Pakartokite slaptazodi..."
+                    maxLength={100}
+                    minLength={6} 
+                    required
+                    />
+                
                 
                 <p className="text-red-600 text-sm text-center">{error}</p>
                 <button 
@@ -106,10 +117,10 @@ const LoginForm = () => {
                     className="text-white text-xl font-bold  hover:text-gray-400 duration-300 disabled:cursor-not-allowed disabled:text-gray-700"
 
                 > 
-                Prisijungti</button>
+                Registruoti</button>
             </form>
             </>
   )
 }
 
-export default LoginForm
+export default RegisterForm

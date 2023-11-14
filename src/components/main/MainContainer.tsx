@@ -11,6 +11,8 @@ const MainContainer = () => {
   const [loggedIn] = useState(Cookies.get("favMovie_token") != undefined)
   const [allUsers, setAllUsers] = useState<AllUsers[]>([])
   const [ favMovies, setFavMovies ] = useState<FavMovie[]>([])
+  const [serach, setSearch] = useState("")
+
 
   useEffect( () => {
     const fetchAllUsrs = async () => {
@@ -31,23 +33,33 @@ const MainContainer = () => {
     fetchAllUsrs()
   },[])
 
-    console.log(favMovies)
-
-
   return (
-    <div className=" bg-black w-3/5 h-5/6 rounded-3xl bg-main shadow-2xl overflow-y-hidden">
+    <div className="w-3/5 h-5/6 rounded-3xl bg-main shadow-2xl  overflow-y-hidden">
         {loggedIn && 
+        <>
           <MainNav />
+          
+
+        </>
+        
         }
-        <div className="p-10 w-full h-full flex items-center justify-center">
+        <input 
+            type="text"
+            value={serach}
+            placeholder="Paieska pagal varda..."
+            onChange={(e) => setSearch(() => e.target.value)}
+            className="text-black bg-gray-400 p-1 rounded-xl mt-2"
+          />
+          
           {allUsers.length > 0 && !loggedIn &&
             <AllUsersList allUsers={allUsers} />
           }   
-        </div>
         
-          {favMovies.length > 0 && loggedIn &&
-            <MovieList movies={favMovies} />
-          }   
+          
+            {favMovies.length > 0 && loggedIn &&
+              <MovieList searchQuery={serach} movies={favMovies} />
+            }
+        
     </div>
   )
 }

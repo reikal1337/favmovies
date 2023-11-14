@@ -1,41 +1,49 @@
-import { useState } from "react"
-import { onlyLettersAndNumbers, passwordCheck } from "../helpers/validation"
-import { register } from "../services/auth.service"
-import Notifications from "./Notifications"
+import { useContext, useState } from "react"
+import { onlyLettersAndNumbers, partialPasswordCheck } from "../../helpers/validation"
+import { login } from "../../services/auth.service"
+import Notifications from "../Notifications"
 import { useNavigate } from "react-router-dom"
+import Cookie from "js-cookie"
+import { UserContext } from "../../contexts/UserContext"
 
-const RegisterForm = () => {
+const CreateMovieForm = () => {
     const [username, setUsername] = useState("")
-    const [passwords, setPasswords] = useState({
-        password: "",
-        repPassword: "",
-    })
+    const [password, setPassword] = useState("")
 
     const [notifications, setNotfications] = useState([])
     const [loading, setLoading] = useState(false)
     const [error,setError] = useState("")
 
+    // @ts-ignore
+    const { setUserState } = useContext(UserContext);
+
+
     const navigate = useNavigate()
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const passCheck = passwordCheck(passwords.password, passwords.repPassword, username)
+        const passCheck = partialPasswordCheck(password, username)
         if(passCheck === ""){
             const formToSend = {
                 username: username,
-                password: passwords.password,
+                password: password,
             }
             setLoading(true)
             setNotfications([])
-            const res = await register(formToSend)
+            const res = await login(formToSend)
+
             if(res.message){
                 setNotfications(res.message)
                 setLoading(false)
             }
-            if(res.username){
+            if(res.access_token){
                 setLoading(false)
-
-                navigate("/prisijungimas")
+                Cookie.set("favMovie_token", res.access_token,{
+                    expires: 20 / 60,
+                    secure: true,
+                })
+                setUserState(res.username)
+                navigate("/")
             }
         }else{
             setError(passCheck)
@@ -49,11 +57,8 @@ const RegisterForm = () => {
         }
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPasswords(prevState => ({
-            ...prevState,
-             [e.target.name]: e.target.value
-            }))
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(() => e.target.value)
     }
 
   return (
@@ -82,33 +87,17 @@ const RegisterForm = () => {
                 <label htmlFor="password" className="text-white font-medium mt-5 mb-">Slpatazodis:
                 </label>
                 <input 
-                    className="rounded-md px-2 bg-gray-200"
+                    className="rounded-md px-2 bg-gray-200 mb-5"
                     type="password"
                     id="password"
                     name="password"
-                    value={passwords.password}
-                    onChange={handleChange} 
+                    value={password}
+                    onChange={handlePasswordChange} 
                     placeholder="Iveskite slaptazodi..."
                     maxLength={100}
                     minLength={6} 
                     required
                     />
-
-                <label htmlFor="repPassword" className="text-white font-medium mt-5 mb-1">Pakartokite slaptazodi:
-                </label>
-                <input
-                    className="rounded-md px-2 bg-gray-200 mb-5"
-                    type="password"
-                    id="repPassword"
-                    name="repPassword"
-                    value={passwords.repPassword}
-                    onChange={handleChange} 
-                    placeholder="Pakartokite slaptazodi..."
-                    maxLength={100}
-                    minLength={6} 
-                    required
-                    />
-                
                 
                 <p className="text-red-600 text-sm text-center">{error}</p>
                 <button 
@@ -117,10 +106,10 @@ const RegisterForm = () => {
                     className="text-white text-xl font-bold  hover:text-gray-400 duration-300 disabled:cursor-not-allowed disabled:text-gray-700"
 
                 > 
-                Registruoti</button>
+                Prisijungti</button>
             </form>
             </>
   )
 }
 
-export default RegisterForm
+export default CreateMovieForm

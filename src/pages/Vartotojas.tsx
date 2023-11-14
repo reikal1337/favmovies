@@ -22,7 +22,7 @@ const Vartotojas = () => {
       console.log(usersMovies)
 
   return (
-    <div className=" bg-black w-3/5 h-5/6 rounded-3xl bg-main shadow-2xl flex items-start py-10 pl-20 pr-5 overflow-y-hidden  ">
+    <div className="w-3/5 h-5/6 rounded-3xl bg-main shadow-2xl flex items-start py-10 pl-20 pr-5 overflow-y-hidden">
         {usersMovies.length > 0 &&
         <MovieList movies={usersMovies} />
         }
