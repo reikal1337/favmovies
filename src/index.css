@@ -11,5 +11,22 @@ html,body{
 .bg-main {
     background: rgb(0,0,0);
     background: linear-gradient(121deg, rgba(0,0,0,1) 0%, rgba(31,23,23,1) 74%, rgba(25,8,8,1) 100%);
+    
+    background-image: linear-gradient(to right, #302f2f 0%, black 100%);
+
+    background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    background: linear-gradient(289.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+
+
+  }
+
+  .btnClose{
+    color: red;
+    transition: color 0.3s ease-in-out;
+    
+  }
+
+  .btnClose:hover{
+    color: rgb(102, 6, 6);
   }
   

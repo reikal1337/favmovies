@@ -1,13 +1,22 @@
+import BackgroundImg from "./components/BackgroundImg"
 import MainContainer from "./components/MainContainer"
+import NavBar from "./components/NavBar"
 
 function App() {
 
   return (
+    <>
+    <BackgroundImg />
+    <NavBar />
+
     <main
-      className='bg-cover bg-center bg-no-repeat w-screen h-screen flex justify-center items-center'
-      style={{backgroundImage: "url(./background.jpg)"}}>
+      className='w-screen h-screen flex flex-col justify-center items-center'>
+      
+
       <MainContainer />
+
     </main>
+    </>
   )
 }
 
