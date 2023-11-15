@@ -1,4 +1,3 @@
-import ReactDom from "react-dom"
 
 type Props = {
     messages: string[] | string

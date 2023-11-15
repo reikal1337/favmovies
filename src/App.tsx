@@ -7,7 +7,7 @@ import Cookies from "js-cookie"
 import { UserProvider } from "./contexts/UserContext"
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(Cookies.get("favMovie_token") != undefined)
+  const [loggedIn] = useState(Cookies.get("favMovie_token") != undefined)
 
   const RouterLayout = () => {
     return (
