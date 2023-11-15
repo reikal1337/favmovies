@@ -1,9 +1,5 @@
 import { useContext, useState } from "react"
-import { onlyLettersAndNumbers, partialPasswordCheck } from "../../helpers/validation"
-import { login } from "../../services/auth.service"
 import Notifications from "../Notifications"
-import { useNavigate } from "react-router-dom"
-import Cookie from "js-cookie"
 import { UserContext } from "../../contexts/UserContext"
 import { createFavMovie } from "../../services/movies.servise"
 

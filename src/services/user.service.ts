@@ -21,3 +21,17 @@ export const getMyUsername = async () => {
     })
     return await res.json()
 }
+
+export const changeMyPassword = async (formToSend: NewPassword) => {
+    const auth = Cookies.get("favMovie_token")
+    const res = await fetch(BASE_URL + `user`,{
+        method: "PATCH",
+        headers: {
+            Authorization: `Bearer ${auth}`,
+            "Content-Type": "application/json",
+
+        },
+        body: JSON.stringify(formToSend)
+    })
+    return await res.json()
+}

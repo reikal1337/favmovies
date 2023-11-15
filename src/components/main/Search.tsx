@@ -19,7 +19,7 @@ const Search = ({ addClass }: Props) => {
     setSearch(e.target.value)
   }
   return (
-    <div className={`flex justify-center items-center mt-2 ${addClass}`}>
+    <div className={`flex justify-center items-center  mt-2 ${addClass}`}>
     <label htmlFor="search" className="mr-2">Paieska:</label>
     <input 
         id='search'
@@ -27,7 +27,7 @@ const Search = ({ addClass }: Props) => {
         value={serach}
         placeholder="Paieska pagal varda..."
         onChange={handleSearchChange}
-        className="text-black bg-gray-400 p-1 rounded-xl "
+        className="text-black bg-gray-400 p-1 rounded-xl placeholder:text-gray-600"
       />
     </div>
   )

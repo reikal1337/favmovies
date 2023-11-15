@@ -33,10 +33,10 @@ const NavBar = () => {
   }
 
   return (
-    <div className="w-full h-[120px}] z-50 fixed text-white text-xl flex justify-end">
+    <div className="w-full h-[120px}] -z-1 fixed text-white text-xl flex justify-end">
         <div className="bg-main p-5 flex justify-center items-center rounded-bl-3xl">
           <Link to="/" aria-label="Prisijungti"
-              className="mx-5 font-semibold hover:text-gray-400 duration-300"><IoIosHome size={60} /></Link>
+              className="mx-5 font-semibold hover:text-gray-400 duration-300"><IoIosHome size={40} /></Link>
           {!loggedIn ?
           <>
             <Link to="/prisijungimas" aria-label="Prisijungti"
@@ -48,9 +48,9 @@ const NavBar = () => {
           </>
           :
           <>
-            <button onClick={handleLogOut} aria-label="Atsijungti"><AiOutlineLogin className="btnClose mr-10" size={60} /></button>
+            <button onClick={handleLogOut} aria-label="Atsijungti"><AiOutlineLogin className="btnClose mr-10" size={40} /></button>
             <Link to="/profilis" aria-label="Profilis"><img className="rounded-full border-stone-600 border-2"
-            srcSet={`https://robohash.org/${user?.username !== "" ? user?.username : "placeholder"}.jpg?size=80x80`} /></Link>
+            srcSet={`https://robohash.org/${user?.username !== "" ? user?.username : "placeholder"}.jpg?size=60x60`} /></Link>
           </>
           }
            

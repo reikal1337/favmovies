@@ -11,7 +11,7 @@ const RegisterForm = () => {
         repPassword: "",
     })
 
-    const [notifications, setNotfications] = useState([])
+    const [notifications, setNotfications] = useState<string[]>([])
     const [loading, setLoading] = useState(false)
     const [error,setError] = useState("")
 
@@ -63,7 +63,8 @@ const RegisterForm = () => {
     <form 
         className="flex flex-col justify-center text-black items-center bg-main p-5 px-7 rounded-xl"
         onSubmit={handleSubmit}>
-                <label htmlFor="username" className="text-white font-medium mt-5 mb-1" >Vartotojo vardas:
+                <label htmlFor="username" className="text-white font-medium mt-5 mb-1" >
+                    Vartotojo vardas:
                 </label>
                 <input 
                         className="rounded-md px-2 bg-gray-200 "
@@ -78,7 +79,8 @@ const RegisterForm = () => {
                         required
                         /> 
 
-                <label htmlFor="password" className="text-white font-medium mt-5 mb-">Slpatazodis:
+                <label htmlFor="password" className="text-white font-medium mt-5 mb-">
+                    Slpatazodis:
                 </label>
                 <input 
                     className="rounded-md px-2 bg-gray-200"
@@ -93,7 +95,8 @@ const RegisterForm = () => {
                     required
                     />
 
-                <label htmlFor="repPassword" className="text-white font-medium mt-5 mb-1">Pakartokite slaptazodi:
+                <label htmlFor="repPassword" className="text-white font-medium mt-5 mb-1">
+                    Pakartokite slaptazodi:
                 </label>
                 <input
                     className="rounded-md px-2 bg-gray-200 mb-5"

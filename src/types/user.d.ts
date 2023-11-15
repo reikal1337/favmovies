@@ -7,3 +7,8 @@ type UserStored = {
     username: string,
     favMovies: FavMovie[] | never[] 
 }
+
+type NewPassword = {
+    oldPassword: string,
+    password: string,
+}

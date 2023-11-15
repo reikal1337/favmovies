@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import MovieCard from "./MovieCard"
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { deleteFavMovies } from "../../../services/movies.servise";
 import Notifications from "../../Notifications";
 import { UserContext } from "../../../contexts/UserContext";

@@ -4,6 +4,9 @@ import { getFavMoviesByUserId } from "../services/movies.servise";
 import MovieList from "../components/main/movies/MovieList";
 import Search from "../components/main/Search";
 import OrderBy from "../components/main/OrderBy";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { Link } from "react-router-dom";
+
 
 const Vartotojas = () => {
     const { id } = useParams();
@@ -21,17 +24,22 @@ const Vartotojas = () => {
     },[])
     
   return (
-    <div className="w-3/5 h-5/6 rounded-3xl bg-main shadow-2xl flex flex-col items-start pr-4 overflow-y-hidden">
-      <div className="flex justify-center items-center w-full">
+    <main className="w-3/5 h-5/6 mt-[105px] rounded-3xl bg-main shadow-2xl flex flex-col items-start pr-4 overflow-y-hidden">
+      
+      <div className="flex justify-between items-center w-full">
+      <Link to="/" className="hover:text-gray-600 duration-300">
+          <IoMdArrowRoundBack size={40} />
+      </Link>
+      <Search />
         <h3 className="text-xl mr-10 mt-2">{usersMovies?.username}</h3>
-        <Search />
+        
       </div>
       
       <OrderBy />
         {usersMovies != undefined && usersMovies.movies.length > 0 &&
         <MovieList movies={usersMovies.movies} />
         }
-    </div>
+    </main>
   )
 }
 

@@ -45,7 +45,7 @@ const MainContainer = () => {
   },[])
 
   return (
-    <div className="w-3/5 h-5/6  rounded-3xl bg-main shadow-2xl flex flex-col items-start overflow-y-hidden">
+    <main className="w-3/5 h-5/6 mt-[105px]  rounded-3xl bg-main shadow-2xl flex flex-col items-start overflow-y-hidden">
       <div className="w-full">
           {loggedIn && (pathname === "/" || pathname === "/kitu") &&
             <MainNav />
@@ -67,7 +67,7 @@ const MainContainer = () => {
             isEditable={search.includes("?redaguoti=true") ? true : false}
             movies={user.favMovies} />
         }
-        </div>
+      </main>
         
   )
 }
