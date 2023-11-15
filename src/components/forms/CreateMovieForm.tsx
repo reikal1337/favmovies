@@ -5,6 +5,7 @@ import Notifications from "../Notifications"
 import { useNavigate } from "react-router-dom"
 import Cookie from "js-cookie"
 import { UserContext } from "../../contexts/UserContext"
+import { createFavMovie } from "../../services/movies.servise"
 
 const CreateMovieForm = () => {
     const [formData, setFormData] = useState({
@@ -14,24 +15,62 @@ const CreateMovieForm = () => {
         description: "",
     })
 
-    const [notifications, setNotfications] = useState([])
+    const [notifications, setNotfications] = useState<string[]>([])
     const [loading, setLoading] = useState(false)
-    const [error,setError] = useState("")
 
-    // @ts-ignore
-    const { setUserState } = useContext(UserContext);
-
-
-    const navigate = useNavigate()
+     const { setUser } = useContext(UserContext);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log(formData)
+        setLoading(true)
+        setNotfications([])
+        const formToSend: CreateFavMovie = {
+            title: formData.title,
+            imageURL: formData.imageURL,
+            imdbURL: formData.imdbURL,
+            description: formData.description
+        } 
 
-       
+        if(formToSend.description === ""){
+            delete formToSend.description
+        }
+        if(formToSend.imdbURL === ""){
+            delete formToSend.imdbURL
+        }
+        console.log("Siunciu: ", formToSend)
+
+        const res = await createFavMovie(formToSend)
+        if(res.message){
+            setNotfications(res.message)
+        }
+        if(res.favMovies){
+            setNotfications(["Sukurtas ir pridetas naujas filmas!"])
+            setFormData({
+                title: "",
+                imageURL: "",
+                imdbURL: "",
+                description: "",
+            })
+            setUser(prevState => ({
+                ...prevState,
+                favMovies: res.favMovies
+            }))
+        }
+        setLoading(false)
+
     }
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        
+        setFormData(prevState => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }))
+    }
+
+    const handleDescriptionChange = (e:  React.ChangeEvent<HTMLTextAreaElement>) => {
+        setFormData(prevState => ({
+            ...prevState,
+            description: e.target.value
+        }))
     }
 
   return (
@@ -42,76 +81,75 @@ const CreateMovieForm = () => {
     <form 
         className="flex flex-col justify-center text-black items-center bg-main p-5 px-7 rounded-xl"
         onSubmit={handleSubmit}>
-                    <label htmlFor="title" className="text-white font-medium mt-5 mb-1" >
-                        *Filmo avadinimas:
-                    </label>
-                    <input 
-                        className="rounded-md px-2 bg-gray-200 "
-                        type="text"
-                        id="title"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                        placeholder="Iveskite vartotojo var.."
-                        maxLength={100}
-                        minLength={1}
-                        required
-                        /> 
+                <label htmlFor="title" className="text-white font-medium mt-5 mb-1" >
+                    *Filmo avadinimas:
+                </label>
+                <input 
+                    className="rounded-md px-2 bg-gray-200 "
+                    type="text"
+                    id="title"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleChange}
+                    placeholder="Iveskite filmo pavadi..."
+                    maxLength={100}
+                    minLength={1}
+                    required
+                    /> 
 
-                <label htmlFor="imageURL" className="text-white font-medium mt-5 mb-">
+                <label htmlFor="imageURL" className="text-white font-medium mt-5 ">
                     *Posterio url:
                 </label>
                 <input 
-                    className="rounded-md px-2 bg-gray-200 mb-5"
+                    className="rounded-md px-2 bg-gray-200 "
                     type="text"
                     id="imageURL"
                     name="imageURL"
                     value={formData.imageURL}
                     onChange={handleChange} 
-                    placeholder="Iveskite slaptazodi..."
+                    placeholder="Iveskite posterio/img url..."
                     maxLength={200}
                     minLength={5} 
                     required
                     />
 
-                <label htmlFor="imdbURL" className="text-white font-medium mt-5 mb-">
-                    Imdb url:
+                <label htmlFor="imdbURL" className="text-white font-medium mt-5 ">
+                    IMDb url:
                 </label>
                 <input 
-                    className="rounded-md px-2 bg-gray-200 mb-5"
-                    type="imdbURL"
+                    className="rounded-md px-2 bg-gray-200 "
+                    type="text"
                     id="imdbURL"
                     name="imdbURL"
                     value={formData.imdbURL}
                     onChange={handleChange} 
-                    placeholder="Iveskite slaptazodi..."
+                    placeholder="Iveskite imdb..."
                     maxLength={200}
                     minLength={5} 
+
                     />
 
                 <label htmlFor="description" className="text-white font-medium mt-5 mb-">
                     Aprasymas:
                 </label>
-                <input 
-                    className="rounded-md px-2 bg-gray-200 mb-5"
-                    type="description"
+                <textarea 
+                    className="rounded-md px-2 bg-gray-200 mb-5 resize-none"
                     id="description"
                     name="description"
                     value={formData.description}
-                    onChange={handleChange} 
-                    placeholder="Iveskite slaptazodi..."
-                    maxLength={1}
+                    onChange={handleDescriptionChange} 
+                    placeholder="Prasykite aprasyma..."
+                    rows={7}
                     minLength={250} 
                     />
                 
-                <p className="text-red-600 text-sm text-center">{error}</p>
                 <button 
                     type="submit"
                     disabled={loading}
                     className="text-white text-xl font-bold  hover:text-gray-400 duration-300 disabled:cursor-not-allowed disabled:text-gray-700"
 
                 > 
-                Prisijungti</button>
+                Sukurti</button>
             </form>
             </>
   )

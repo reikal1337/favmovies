@@ -5,7 +5,7 @@ type Props = {
  addClass?: string
 }
 
-const Search = ({addClass}: Props) => {
+const Search = ({ addClass }: Props) => {
 
   const [serach, setSearch] = useState("")
   const [ _, setSerachParam ] = useSearchParams()
@@ -19,13 +19,17 @@ const Search = ({addClass}: Props) => {
     setSearch(e.target.value)
   }
   return (
+    <div className={`flex justify-center items-center mt-2 ${addClass}`}>
+    <label htmlFor="search" className="mr-2">Paieska:</label>
     <input 
-            type="text"
-            value={serach}
-            placeholder="Paieska pagal varda..."
-            onChange={handleSearchChange}
-            className="text-black bg-gray-400 p-1 rounded-xl mt-2"
-          />
+        id='search'
+        type="text"
+        value={serach}
+        placeholder="Paieska pagal varda..."
+        onChange={handleSearchChange}
+        className="text-black bg-gray-400 p-1 rounded-xl "
+      />
+    </div>
   )
 }
 

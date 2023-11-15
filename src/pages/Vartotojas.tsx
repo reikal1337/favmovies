@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { getFavMoviesByUserId } from "../services/movies.servise";
 import MovieList from "../components/main/movies/MovieList";
+import Search from "../components/main/Search";
+import OrderBy from "../components/main/OrderBy";
 
 const Vartotojas = () => {
     const { id } = useParams();
-
-    const [usersMovies, setUsersMovies] = useState<FavMovie[]>([])
+    const [usersMovies, setUsersMovies] = useState<UsersMovies>()
 
     useEffect( () => {
       const fetchUsersMovies = async () => {
@@ -19,12 +20,16 @@ const Vartotojas = () => {
       fetchUsersMovies()
     },[])
     
-      console.log(usersMovies)
-
   return (
-    <div className="w-3/5 h-5/6 rounded-3xl bg-main shadow-2xl flex items-start py-10 pl-20 pr-5 overflow-y-hidden">
-        {usersMovies.length > 0 &&
-        <MovieList movies={usersMovies} />
+    <div className="w-3/5 h-5/6 rounded-3xl bg-main shadow-2xl flex flex-col items-start pr-4 overflow-y-hidden">
+      <div className="flex justify-center items-center w-full">
+        <h3 className="text-xl mr-10 mt-2">{usersMovies?.username}</h3>
+        <Search />
+      </div>
+      
+      <OrderBy />
+        {usersMovies != undefined && usersMovies.movies.length > 0 &&
+        <MovieList movies={usersMovies.movies} />
         }
     </div>
   )

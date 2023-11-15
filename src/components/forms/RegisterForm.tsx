@@ -34,7 +34,6 @@ const RegisterForm = () => {
             }
             if(res.username){
                 setLoading(false)
-
                 navigate("/prisijungimas")
             }
         }else{

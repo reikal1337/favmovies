@@ -1,6 +1,4 @@
-import { useState } from "react";
 import MovieCard from "./MovieCard"
-import { IoMdArrowDropdown, IoMdArrowDropup, IoMdRemove  } from "react-icons/io";
 import { useSearchParams } from "react-router-dom";
 
 type Props = {
@@ -8,11 +6,10 @@ type Props = {
 }
 
 const MovieList = ({ movies,  }: Props) => {
-
-
   const [ serachParam ] = useSearchParams()
   const serachQuery = serachParam.get("paieska")?.toLowerCase()
   const orderBy = serachParam.get("ob")
+  
 
   const returnSortedMovies = () => {
     if(orderBy === "Az"){
@@ -25,12 +22,12 @@ const MovieList = ({ movies,  }: Props) => {
   return (
 
     <>
-    <div className="w-full h-full py-10 pb-20 pl-20 pr-5 overflow-y-scroll ">
+    <div className="w-full h-full pl-20 pr-5 overflow-y-scroll ">
       {returnSortedMovies()
       .filter((movie) =>
        movie.title.toLowerCase()
        .includes(serachQuery !== undefined ? serachQuery : ""))
-      .map( (movie,i) => {
+      .map((movie,i) => {
         return <MovieCard key={movie._id + i}  movie={movie}/>
       })
       }

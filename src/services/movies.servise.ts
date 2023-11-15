@@ -20,3 +20,19 @@ export const getMyFavMovies = async () => {
     })
     return await res.json()
 }
+
+export const createFavMovie = async (formToSend: CreateFavMovie) => {
+    const auth = Cookies.get("favMovie_token")
+    const res = await fetch(BASE_URL + `movies`,{
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${auth}`,
+            "Content-Type": "application/json",
+
+        },
+        body: JSON.stringify(formToSend)
+
+        
+    })
+    return await res.json()
+}

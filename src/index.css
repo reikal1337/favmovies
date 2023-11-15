@@ -79,4 +79,9 @@ html, body {
   .notification {
     animation: notificationAnim 7s forwards;
   }
+
+ .active{
+  background-color: rgb(255, 255, 255, 0.15 );
+  transition: 0.3s ease;
+  }
   

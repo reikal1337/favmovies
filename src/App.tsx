@@ -4,12 +4,10 @@ import NavBar from "./components/NavBar"
 import { Home, Login, PageNotFound, Profile, Register, Vartotojas } from "./pages"
 import { useState } from "react"
 import Cookies from "js-cookie"
-import { UserContext } from "./contexts/UserContext"
+import { UserProvider } from "./contexts/UserContext"
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(Cookies.get("favMovie_token") != undefined)
-
-  const [ userState, setUserState] = useState<string>("")
 
   const RouterLayout = () => {
     return (
@@ -30,7 +28,7 @@ function App() {
     createRoutesFromElements(
       <Route errorElement={<PageNotFound />} element={<RouterLayout />} >
         <Route path="/" index element={<Home />} />
-        <Route path="/vartotojas/:id" index element={<Vartotojas />} />
+        <Route path="/vartotojo/:id" index element={<Vartotojas />} />
 
         
         {!loggedIn ?
@@ -41,6 +39,8 @@ function App() {
           :
           <>
             <Route path="/profilis" element={<Profile />} />
+            <Route path="/kitu" element={<Home />} />
+            <Route path="/mano" element={<Home />} />
           </>
         }
 
@@ -52,9 +52,9 @@ function App() {
 
   return (
     <>
-      <UserContext.Provider value={{ userState, setUserState }} >
+      <UserProvider>
         <RouterProvider router={router} />
-      </UserContext.Provider>
+      </UserProvider>
     </>
   )
 }

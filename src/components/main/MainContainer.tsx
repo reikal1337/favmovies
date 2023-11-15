@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import MainNav from "./MainNav"
 import Cookies from "js-cookie"
 import { getAllUsers } from "../../services/user.service"
@@ -7,13 +7,20 @@ import { getMyFavMovies } from "../../services/movies.servise"
 import MovieList from "./movies/MovieList"
 import Search from "./Search"
 import OrderBy from "./OrderBy"
+import { useLocation } from "react-router-dom"
+import PopUp from "../PopUp"
+import CreateMovieForm from "../forms/CreateMovieForm"
+import { UserContext } from "../../contexts/UserContext"
 
 
 const MainContainer = () => {
   
   const [loggedIn] = useState(Cookies.get("favMovie_token") != undefined)
   const [allUsers, setAllUsers] = useState<AllUsers[]>([])
-  const [ favMovies, setFavMovies ] = useState<FavMovie[]>([])
+
+  const { user, setUser } = useContext(UserContext);
+
+  const { pathname, search } = useLocation()
 
   useEffect( () => {
     const fetchAllUsrs = async () => {
@@ -23,39 +30,47 @@ const MainContainer = () => {
 
     const fetchfavMovies = async () => {
       const myFavMovies = await getMyFavMovies()
-      setFavMovies(myFavMovies)
+      setUser(prevState => ({
+        ...prevState,
+        favMovies: myFavMovies
+      }))
     }
 
     
-    if(loggedIn){
+    if(loggedIn && user.favMovies.length === 0){
       fetchfavMovies()
     }
 
     fetchAllUsrs()
   },[])
 
+  console.log("user: ", user)
+
 
 
   return (
-    <div className="w-3/5 h-5/6 rounded-3xl bg-main shadow-2xl overflow-y-hidden">
-        {/* {loggedIn && 
-          <MainNav />
-        } */}
-        {/* <Search />
-        <OrderBy /> */}
-        <div className="flex items-start py-10">
-          
-        {allUsers.length > 0 && !loggedIn &&
+    <div className="w-3/5 h-5/6  rounded-3xl bg-main shadow-2xl flex flex-col items-start overflow-y-hidden">
+      <div className="w-full">
+          {loggedIn && (pathname === "/" || pathname === "/kitu") &&
+            <MainNav />
+          }
+          <Search />
+          <OrderBy />
+        </div>
+        {allUsers.length > 0 && (!loggedIn || pathname === "/kitu") &&
           <AllUsersList allUsers={allUsers} />
-        }   
+        } 
+        {loggedIn && search === "?kurti=true" &&
+         <PopUp closeLink={"/"}>
+          <CreateMovieForm />
+        </PopUp>}
       
         
-        {favMovies.length > 0 && loggedIn &&
-          <MovieList movies={favMovies} />
+        {user.favMovies.length > 0 && loggedIn && pathname === "/" &&
+          <MovieList movies={user.favMovies} />
         }
         </div>
         
-    </div>
   )
 }
 
