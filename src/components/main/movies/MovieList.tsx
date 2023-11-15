@@ -69,7 +69,7 @@ const MovieList = ({ movies, isEditable }: Props) => {
         </button>
       </div>
       }
-    <div className="w-full h-full pl-20 pr-5 overflow-y-scroll ">
+    <div className="w-full h-full pl-5 sm:pl-10 md:pl-15 lg:pl-20 pr-5 overflow-y-scroll ">
       {returnSortedMovies()
       .filter((movie) =>
        movie.title.toLowerCase()

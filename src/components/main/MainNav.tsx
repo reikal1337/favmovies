@@ -1,7 +1,6 @@
 import BtnLinkBlue from "../buttons/BtnLinkBlue"
-import BtnSmpleBlue from "../buttons/BtnLinkBlue"
 import BtnMainNav from "../buttons/BtnMainNav"
-import { Link, useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 function MainNav() {
 

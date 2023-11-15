@@ -8,9 +8,9 @@ import { getMyUsername } from "../services/user.service"
 
 const NavBar = () => {
   const [loggedIn] = useState(Cookies.get("favMovie_token") != undefined)
-  //@ts-ignore
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate()
+
   useEffect(() =>{
     const getUsername = async () => {
      const res = await getMyUsername()
@@ -33,7 +33,7 @@ const NavBar = () => {
   }
 
   return (
-    <div className="w-full h-[120px}] -z-1 fixed text-white text-xl flex justify-end">
+    <div className="fixed z-50 top-0 right-0 text-white text-xl flex justify-end">
         <div className="bg-main p-5 flex justify-center items-center rounded-bl-3xl">
           <Link to="/" aria-label="Prisijungti"
               className="mx-5 font-semibold hover:text-gray-400 duration-300"><IoIosHome size={40} /></Link>

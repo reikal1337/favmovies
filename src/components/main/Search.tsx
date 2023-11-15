@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 type Props = {
- addClass?: string
+ addClassToLabel?: string
 }
 
-const Search = ({ addClass }: Props) => {
+const Search = ({ addClassToLabel }: Props) => {
 
   const [serach, setSearch] = useState("")
   const [ _, setSerachParam ] = useSearchParams()
@@ -19,8 +19,8 @@ const Search = ({ addClass }: Props) => {
     setSearch(e.target.value)
   }
   return (
-    <div className={`flex justify-center items-center  mt-2 ${addClass}`}>
-    <label htmlFor="search" className="mr-2">Paieska:</label>
+    <div className="flex justify-center  items-center flex-col min-[400px]:flex-row mt-2">
+    <label htmlFor="search" className={`mr-2 ${addClassToLabel}`}>Paieska:</label>
     <input 
         id='search'
         type="text"

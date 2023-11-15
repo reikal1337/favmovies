@@ -24,15 +24,16 @@ const Vartotojas = () => {
     },[])
     
   return (
-    <main className="w-3/5 h-5/6 mt-[105px] rounded-3xl bg-main shadow-2xl flex flex-col items-start pr-4 overflow-y-hidden">
+    <main className=" w-11/12 h-5/6 mt-[105px] sm:w-4/5 lg:w-3/5 rounded-3xl bg-main shadow-2xl flex flex-col items-start pr-4 overflow-y-hidden">
       
       <div className="flex justify-between items-center w-full">
       <Link to="/" className="hover:text-gray-600 duration-300">
           <IoMdArrowRoundBack size={40} />
       </Link>
-      <Search />
+      <div className="sm:flex-row sm:justify-around w-full flex flex-col-reverse justify-center items-center ">
+        <Search addClassToLabel="hidden md:block"/>
         <h3 className="text-xl mr-10 mt-2">{usersMovies?.username}</h3>
-        
+      </div>
       </div>
       
       <OrderBy />
