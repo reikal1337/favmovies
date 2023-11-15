@@ -2,15 +2,36 @@ import { FaImdb } from "react-icons/fa"
 
 
 type Props = {
-    movie: FavMovie
+    movie: FavMovie,
+    isCheked: boolean,
+    setChecked: React.Dispatch<React.SetStateAction<string[]>>,
+    isEditable?: boolean
+
 }
-const MovieCard = ({ movie }: Props) => {
+const MovieCard = ({ movie, isCheked, setChecked,isEditable }: Props) => {
+
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
+
+        if(e.target.checked){
+            setChecked((prevState) => [
+                ...prevState,
+                movie._id
+            ])
+         } else{
+            setChecked((prevState) => {
+                const newState = prevState.filter((id) => id !== movie._id)
+                return [...newState]
+            })
+        }
+    }
   return (
     <div className="mb-10 snap-y">
-         <input 
+        {isEditable && <input 
             type="checkbox"
-            value="" 
-            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+            checked={isCheked}
+            onChange={handleChange}
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600"/>}
         <h4 className="text-xl font-black mb-1">{movie.title}</h4>
         <div className="flex mb-2 items-center">
         <img className="mr-3" width={100} height={200} srcSet={movie.imageURL} />

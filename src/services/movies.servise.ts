@@ -36,3 +36,21 @@ export const createFavMovie = async (formToSend: CreateFavMovie) => {
     })
     return await res.json()
 }
+
+export const deleteFavMovies = async (formToSend: MoviesToDel) => {
+    const auth = Cookies.get("favMovie_token")
+    console.log("Siunciu: ", formToSend)
+    const res = await fetch(BASE_URL + `movies`,{
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${auth}`,
+            "Content-Type": "application/json",
+
+        },
+        body: JSON.stringify(formToSend)
+
+        
+    })
+    return await res.json()
+}
+

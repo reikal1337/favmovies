@@ -44,10 +44,6 @@ const MainContainer = () => {
     fetchAllUsrs()
   },[])
 
-  console.log("user: ", user)
-
-
-
   return (
     <div className="w-3/5 h-5/6  rounded-3xl bg-main shadow-2xl flex flex-col items-start overflow-y-hidden">
       <div className="w-full">
@@ -67,7 +63,9 @@ const MainContainer = () => {
       
         
         {user.favMovies.length > 0 && loggedIn && pathname === "/" &&
-          <MovieList movies={user.favMovies} />
+          <MovieList 
+            isEditable={search.includes("?redaguoti=true") ? true : false}
+            movies={user.favMovies} />
         }
         </div>
         

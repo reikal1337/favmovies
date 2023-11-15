@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom"
 
 function MainNav() {
 
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
 
 
   return (
@@ -22,9 +22,13 @@ function MainNav() {
             Kurti
           </BtnLinkBlue>
           <BtnLinkBlue
-            linkTo="?red=true"
-          >  
-            Redaguoti
+            linkTo={search.includes("?redaguoti=true") ?  "/" : "?redaguoti=true" }
+            >
+              {search.includes("?redaguoti=true") ?
+              "Uzdaryti redagavima"
+              :
+              "Redaguoti"
+              }
           </BtnLinkBlue>
         </div>
     }

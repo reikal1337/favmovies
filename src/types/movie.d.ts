@@ -11,4 +11,8 @@ type UsersMovies = {
     username: string,
 }
 
+type MoviesToDel ={
+    ids: string[]
+}
+
 type CreateFavMovie = Omit<FavMovie, "_id">
