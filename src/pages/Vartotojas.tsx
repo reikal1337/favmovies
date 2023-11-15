@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { getFavMoviesByUserId } from "../services/movies.servise";
-import MovieList from "../components/main/MovieList";
+import MovieList from "../components/main/movies/MovieList";
 
 const Vartotojas = () => {
     const { id } = useParams();
