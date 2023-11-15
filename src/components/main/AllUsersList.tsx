@@ -26,7 +26,7 @@ const AllUsersList = ({ allUsers }: Props) => {
     {returnSortedUsers()
       .filter((user) =>
       user.username.toLowerCase()
-       .includes(serachQuery !== undefined ? serachQuery : ""))
+      .includes(serachQuery !== undefined ? serachQuery : ""))
       .map((user,i) => {
         return <UserCard key={user._id + i} user={user} />
       })
