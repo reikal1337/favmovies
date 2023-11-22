@@ -16,17 +16,12 @@ import { UserContext } from "../../contexts/UserContext"
 const MainContainer = () => {
   
   const [loggedIn] = useState(Cookies.get("favMovie_token") != undefined)
-  const [allUsers, setAllUsers] = useState<AllUsers[]>([])
 
   const { user, setUser } = useContext(UserContext);
 
   const { pathname, search } = useLocation()
 
   useEffect( () => {
-    const fetchAllUsrs = async () => {
-      const allUsrs = await getAllUsers()
-      setAllUsers(allUsrs)
-    }
 
     const fetchfavMovies = async () => {
       const myFavMovies = await getMyFavMovies()
@@ -41,7 +36,6 @@ const MainContainer = () => {
       fetchfavMovies()
     }
 
-    fetchAllUsrs()
   },[])
 
   return (
@@ -53,8 +47,8 @@ const MainContainer = () => {
           <Search />
           <OrderBy />
         </div>
-        {allUsers.length > 0 && (!loggedIn || pathname === "/kitu") &&
-          <AllUsersList allUsers={allUsers} />
+        {(!loggedIn || pathname === "/kitu") &&
+          <AllUsersList />
         } 
         {loggedIn && search === "?kurti=true" &&
          <PopUp closeLink={"/"}>
