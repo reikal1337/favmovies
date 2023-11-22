@@ -10,21 +10,16 @@ const AllUsersList = () => {
   const [pageMax, setPageMax ] = useState(1)
 
   const serachQuery = serachParam.get("paieska")?.toLowerCase()
-  const orderBy = serachParam.get("ob")
+  const orderBy = serachParam.get("ob") || ""
   const currentPage = parseInt(serachParam.get("p") || "1");
-
-  const returnSortedUsers = () => {
-    if(orderBy === "Az"){
-      return users.sort((a,b) => a.username.localeCompare(b.username))
-    }else if (orderBy === "Za"){
-      return users.sort((a,b) => b.username.localeCompare(a.username))
-    }
-    return users
-  }
 
   useEffect(() => {
     const fetchAllUsrs = async () => {
-      const allUsersRes: GetAllUsers = await getAllUsers(currentPage)
+      const allUsersRes: GetAllUsers = await getAllUsers({
+        p: currentPage.toString(),
+        paieska: "",
+        ob: orderBy,
+      })
       console.log(allUsersRes)
 
       setSearchParam(prevState => {
@@ -36,8 +31,7 @@ const AllUsersList = () => {
       setPageMax(allUsersRes.pageMax)
     }
     fetchAllUsrs()
-
-  },[serachParam.get("p")])
+  },[serachParam.get("p"),serachParam.get("ob")])
 
 
   return (
@@ -47,7 +41,7 @@ const AllUsersList = () => {
     }
     <div className="p-10 w-full h-full flex flex-wrap items-center justify-around">
     {users.length > 0 ?
-    returnSortedUsers()
+      users
       .filter((user) =>
       user.username.toLowerCase()
       .includes(serachQuery !== undefined ? serachQuery : ""))

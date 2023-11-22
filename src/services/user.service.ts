@@ -1,8 +1,8 @@
 import { BASE_URL } from "./baseUrl"
 import Cookies from "js-cookie"
 
-export const getAllUsers = async (page: number) => {
-    const res = await fetch(`${BASE_URL}user/all/?p=${page}`,{
+export const getAllUsers = async ({ p, paieska, ob}: UserReq) => {
+    const res = await fetch(`${BASE_URL}user/all/?p=${p}&paieska=${paieska}&ob=${ob}`,{
         method: "GET",
         
     })

@@ -18,3 +18,9 @@ type NewPassword = {
     oldPassword: string,
     password: string,
 }
+
+type UserReq = {
+    p?: string,
+    paieska?: string,
+    ob?: string,
+}
