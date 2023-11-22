@@ -7,6 +7,7 @@ type GetAllUsers = {
     users: AllUsers[],
     page: number,
     pageMax: number,
+    userCount: string,
 }
 
 type UserStored = {
