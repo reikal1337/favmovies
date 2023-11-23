@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import MainNav from "./MainNav"
 import Cookies from "js-cookie"
-import { getAllUsers } from "../../services/user.service"
 import AllUsersList from "./AllUsersList"
 import { getMyFavMovies } from "../../services/movies.servise"
 import MovieList from "./movies/MovieList"
@@ -39,7 +38,7 @@ const MainContainer = () => {
   },[])
 
   return (
-    <main className="relative w-11/12 h-5/6 mt-[105px] sm:w-4/5 lg:w-3/5 rounded-3xl bg-main shadow-2xl flex flex-col items-start overflow-y-hidden">
+    <main className="relative w-11/12 h-5/6 mt-auto sm:w-4/5 lg:w-3/5 rounded-t-3xl bg-main shadow-2xl flex flex-col items-start overflow-y-hidden">
       <div className="w-full">
           {loggedIn && (pathname === "/" || pathname === "/kitu") &&
             <MainNav />

@@ -21,7 +21,6 @@ const NavBar = () => {
      }
 
     if(loggedIn && user.username === ""){
-      console.log("Lol")
       getUsername()
     }
   },[user])

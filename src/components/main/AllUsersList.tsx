@@ -16,24 +16,9 @@ const AllUsersList = () => {
   const currentPage = parseInt(serachParam.get("p") || "1");
 
   useEffect(() => {
-    const fetchAllUsers = async () => {
-      const allUsersRes: GetAllUsers = await getAllUsers({
-        p: currentPage.toString(),
-        paieska: serachQuery,
-        ob: orderBy,
-      })
-      console.log(allUsersRes)
-
-      setSearchParam(prevState => {
-        prevState.set("p", allUsersRes.page.toString())
-        return prevState
-      })
-
-      setUsers(allUsersRes.users)
-      setPageMax(allUsersRes.pageMax)
-    }
+    
     fetchAllUsers()
-  },[serachParam.get("p"),serachParam.get("ob")])
+  },[ serachParam.get("p"),serachParam.get("ob")])
 
 
   const fetchAllUsers = async () => {
@@ -42,7 +27,6 @@ const AllUsersList = () => {
       paieska: serachQuery,
       ob: orderBy,
     })
-    console.log(allUsersRes)
 
     setSearchParam(prevState => {
       prevState.set("p", allUsersRes.page.toString())
@@ -73,14 +57,14 @@ const AllUsersList = () => {
       </>
     }
     
-    <div className="p-10 w-full h-full flex flex-wrap items-center justify-around">
+    <div className="w-full h-full flex flex-wrap items-center justify-around overflow-y-auto ">
     {users.length > 0 ?
       users
       .map((user,i) => {
         return <UserCard key={user._id + i} user={user} />
       })
       :
-      <h3 className="text-gray-600 text-2xl">Nera kitu vartotoju!</h3>
+      <h3 className="text-gray-600 text-2xl">Nera jokiu vartotoju!</h3>
       }
     </div>
     </>
