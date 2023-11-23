@@ -37,7 +37,7 @@ const Vartotojas = () => {
       </div>
       
       <OrderBy />
-        {usersMovies != undefined && usersMovies.movies.length > 0 &&
+        {usersMovies != undefined && usersMovies.movies &&
         <MovieList movies={usersMovies.movies} />
         }
     </main>

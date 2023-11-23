@@ -55,10 +55,11 @@ const MainContainer = () => {
         </PopUp>}
       
         
-        {user.favMovies.length > 0 && loggedIn && pathname === "/" &&
+        {user.favMovies && loggedIn && pathname === "/" &&
           <MovieList 
             isEditable={search.includes("?redaguoti=true") ? true : false}
             movies={user.favMovies} />
+          
         }
       </main>
         
