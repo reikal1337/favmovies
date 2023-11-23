@@ -3,6 +3,13 @@ type AllUsers = {
     username: string,
 }
 
+type GetAllUsers = {
+    users: AllUsers[],
+    page: number,
+    pageMax: number,
+    userCount: string,
+}
+
 type UserStored = {
     username: string,
     favMovies: FavMovie[] | never[] 
@@ -11,4 +18,10 @@ type UserStored = {
 type NewPassword = {
     oldPassword: string,
     password: string,
+}
+
+type UserReq = {
+    p?: string,
+    paieska?: string,
+    ob?: string,
 }

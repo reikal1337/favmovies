@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import MainNav from "./MainNav"
 import Cookies from "js-cookie"
-import { getAllUsers } from "../../services/user.service"
 import AllUsersList from "./AllUsersList"
 import { getMyFavMovies } from "../../services/movies.servise"
 import MovieList from "./movies/MovieList"
@@ -16,17 +15,12 @@ import { UserContext } from "../../contexts/UserContext"
 const MainContainer = () => {
   
   const [loggedIn] = useState(Cookies.get("favMovie_token") != undefined)
-  const [allUsers, setAllUsers] = useState<AllUsers[]>([])
 
   const { user, setUser } = useContext(UserContext);
 
   const { pathname, search } = useLocation()
 
   useEffect( () => {
-    const fetchAllUsrs = async () => {
-      const allUsrs = await getAllUsers()
-      setAllUsers(allUsrs)
-    }
 
     const fetchfavMovies = async () => {
       const myFavMovies = await getMyFavMovies()
@@ -41,11 +35,10 @@ const MainContainer = () => {
       fetchfavMovies()
     }
 
-    fetchAllUsrs()
   },[])
 
   return (
-    <main className="w-11/12 h-5/6 mt-[105px] sm:w-4/5 lg:w-3/5 rounded-3xl bg-main shadow-2xl flex flex-col items-start overflow-y-hidden">
+    <main className="relative w-11/12 h-5/6 mt-auto sm:w-4/5 lg:w-3/5 rounded-t-3xl bg-main shadow-2xl flex flex-col items-start overflow-y-hidden">
       <div className="w-full">
           {loggedIn && (pathname === "/" || pathname === "/kitu") &&
             <MainNav />
@@ -53,8 +46,8 @@ const MainContainer = () => {
           <Search />
           <OrderBy />
         </div>
-        {allUsers.length > 0 && (!loggedIn || pathname === "/kitu") &&
-          <AllUsersList allUsers={allUsers} />
+        {(!loggedIn || pathname === "/kitu") &&
+          <AllUsersList />
         } 
         {loggedIn && search === "?kurti=true" &&
          <PopUp closeLink={"/"}>
@@ -62,10 +55,11 @@ const MainContainer = () => {
         </PopUp>}
       
         
-        {user.favMovies.length > 0 && loggedIn && pathname === "/" &&
+        {user.favMovies && loggedIn && pathname === "/" &&
           <MovieList 
             isEditable={search.includes("?redaguoti=true") ? true : false}
             movies={user.favMovies} />
+          
         }
       </main>
         

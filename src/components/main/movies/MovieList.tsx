@@ -70,7 +70,8 @@ const MovieList = ({ movies, isEditable }: Props) => {
       </div>
       }
     <div className="w-full h-full pl-5 sm:pl-10 md:pl-15 lg:pl-20 pr-5 overflow-y-scroll ">
-      {returnSortedMovies()
+      {movies && movies.length > 0 ?
+      returnSortedMovies()
       .filter((movie) =>
        movie.title.toLowerCase()
        .includes(serachQuery !== undefined ? serachQuery : ""))
@@ -81,7 +82,10 @@ const MovieList = ({ movies, isEditable }: Props) => {
           setChecked={setCheckedList}
           key={movie._id + i} movie={movie}/>
       })
+      :
+      <h3 className="text-gray-600 text-2xl flex w-full justify-center items-center">Nera jokiu filmu!</h3>
       }
+      
     </div>
     </>
   )
